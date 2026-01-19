@@ -99,3 +99,7 @@ function AnalyticsDashboard() {
         </div>
     );
 }
+
+export default dynamic(() => Promise.resolve(AnalyticsDashboard), {
+    ssr: false
+});
