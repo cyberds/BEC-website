@@ -1,10 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import clientPromise from '@/utils/db';
 
 type Data = {
     message: string;
 };
 
-export default function handler(
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data>
 ) {
@@ -22,10 +23,24 @@ export default function handler(
             return res.status(400).json({ message: 'Invalid email address' });
         }
 
-        // Mock sending email
-        console.log('Contact Form Submission:', { name, email, message });
+        try {
+            const client = await clientPromise;
+            const db = client.db("bec_website");
+            const collection = db.collection("contacts");
 
-        return res.status(200).json({ message: 'Message sent successfully' });
+            await collection.insertOne({
+                name,
+                email,
+                message,
+                createdAt: new Date()
+            });
+
+            console.log('Contact Form Saved to DB:', { name, email, message });
+            return res.status(200).json({ message: 'Message sent successfully' });
+        } catch (error) {
+            console.error('Contact error:', error);
+            return res.status(500).json({ message: 'Error saving message' });
+        }
     }
 
     res.setHeader('Allow', ['POST']);
