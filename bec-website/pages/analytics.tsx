@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { getAnalyticsStats } from '@/utils/api';
 import { formatDate } from '@/utils/helpers';
+import dynamic from 'next/dynamic';
 
 type SessionData = {
     startTime: string;
@@ -15,7 +16,7 @@ type AnalyticsData = {
     sessions: Record<string, SessionData>;
 };
 
-export default function AnalyticsDashboard() {
+function AnalyticsDashboard() {
     const [data, setData] = useState<AnalyticsData | null>(null);
     const [loading, setLoading] = useState(true);
 
