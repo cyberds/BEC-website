@@ -1,4 +1,5 @@
 import { NextPageContext } from 'next';
+import Link from 'next/link';
 
 function Error({ statusCode }: { statusCode?: number }) {
     return (
@@ -8,7 +9,7 @@ function Error({ statusCode }: { statusCode?: number }) {
                     ? `An error ${statusCode} occurred on server`
                     : 'An error occurred on client'}
             </h2>
-            <a href="/" className="mt-8 text-accent hover:underline">Return to Home</a>
+            <Link href="/" className="mt-8 text-accent hover:underline">Return to Home</Link>
         </div>
     )
 }

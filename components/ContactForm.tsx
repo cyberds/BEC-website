@@ -32,7 +32,7 @@ const ContactForm = () => {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-4xl md:text-6xl font-black text-white mb-6">Let's Create Magic</h2>
+                    <h2 className="text-4xl md:text-6xl font-black text-white mb-6">Let&apos;s Create Magic</h2>
                     <p className="text-xl text-gray-400">Ready to start your next project? Drop us a line.</p>
                 </motion.div>
 
@@ -90,7 +90,7 @@ const ContactForm = () => {
                     </button>
 
                     {status === 'success' && (
-                        <p className="text-green-400 text-center font-medium animate-pulse">Message sent successfully! We'll be in touch.</p>
+                        <p className="text-green-400 text-center font-medium animate-pulse">Message sent successfully! We&apos;ll be in touch.</p>
                     )}
                     {status === 'error' && (
                         <p className="text-red-400 text-center font-medium">Something went wrong. Please try again.</p>

@@ -14,10 +14,10 @@ const Footer = () => {
                 </div>
 
                 <div className="flex space-x-6 mb-8 md:mb-0">
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors"><FaInstagram size={24} /></a>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors"><FaTwitter size={24} /></a>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors"><FaLinkedin size={24} /></a>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors"><FaFacebook size={24} /></a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors"><FaInstagram size={24} /></a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors"><FaTwitter size={24} /></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors"><FaLinkedin size={24} /></a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors"><FaFacebook size={24} /></a>
                 </div>
 
                 <div className="text-gray-500 text-sm">

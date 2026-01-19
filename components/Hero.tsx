@@ -1,5 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Hero = () => {
     const x = useMotionValue(0);
@@ -58,11 +60,14 @@ const Hero = () => {
                     style={{ transform: "translateZ(50px)" }}
                 >
                     <div className="absolute -inset-4 bg-gradient-to-r from-accent to-pink-500 rounded-3xl blur opacity-20 animate-pulse" />
-                    <img
-                        src="/images/art_craft.png"
-                        alt="Artistic Work"
-                        className="rounded-3xl shadow-2xl border border-white/10 w-full max-w-lg mx-auto transform-gpu"
-                    />
+                    <div className="relative w-full max-w-lg mx-auto aspect-video rounded-3xl shadow-2xl border border-white/10 overflow-hidden transform-gpu">
+                        <Image
+                            src="/images/art_craft.png"
+                            alt="Artistic Work"
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
                 </motion.div>
 
                 <motion.h1
@@ -84,9 +89,9 @@ const Hero = () => {
                 <motion.div
                     style={{ transform: "translateZ(120px)" }}
                 >
-                    <a href="#contact" className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors text-lg shadow-xl">
+                    <Link href="#contact" className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors text-lg shadow-xl">
                         Explore Our World
-                    </a>
+                    </Link>
                 </motion.div>
 
             </motion.div>
