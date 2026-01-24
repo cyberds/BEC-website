@@ -29,3 +29,23 @@ export const trackVisit = (data: { sessionId: string, duration?: number }) =>
 
 export const getAnalyticsStats = () =>
     apiCall('/api/analytics', 'GET');
+
+// Artzy Box form submissions
+export interface AdvertSubmission {
+    name: string;
+    email: string;
+    targetLocation: string[];
+    advertText?: string;
+    numBoxes: number;
+    website?: string;
+    whatsapp: string;
+    hasDesignFile?: boolean;
+    designFileName?: string | null;
+}
+
+export const submitAdvertRequest = (data: AdvertSubmission) =>
+    apiCall('/api/advert-submission', 'POST', data);
+
+export const requestPricing = (data: { email: string; phone: string }) =>
+    apiCall('/api/pricing-request', 'POST', data);
+

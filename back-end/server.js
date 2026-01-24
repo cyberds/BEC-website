@@ -101,6 +101,60 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
+// Advert Submission Endpoint (Artzy Box)
+app.post('/api/advert-submission', async (req, res) => {
+    const {
+        name,
+        email,
+        targetLocation,
+        advertText,
+        numBoxes,
+        website,
+        whatsapp,
+        hasDesignFile,
+        designFileName
+    } = req.body;
+
+    try {
+        const collection = db.collection("advert_submissions");
+        await collection.insertOne({
+            name,
+            email,
+            targetLocation,
+            advertText: advertText || null,
+            numBoxes,
+            website: website || null,
+            whatsapp,
+            hasDesignFile: hasDesignFile || false,
+            designFileName: designFileName || null,
+            status: 'pending',
+            createdAt: new Date()
+        });
+        res.status(200).json({ message: 'Advert submission saved successfully' });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
+// Pricing Request Endpoint (Artzy Box)
+app.post('/api/pricing-request', async (req, res) => {
+    const { email, phone } = req.body;
+
+    try {
+        const collection = db.collection("pricing_requests");
+        await collection.insertOne({
+            email,
+            phone,
+            status: 'pending',
+            createdAt: new Date()
+        });
+        res.status(200).json({ message: 'Pricing request saved successfully' });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Backend listening at http://localhost:${port}`);
 });
+

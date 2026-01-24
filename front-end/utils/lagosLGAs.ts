@@ -1,0 +1,25 @@
+/**
+ * Lagos Local Government Areas for the target location dropdown
+ */
+export const lagosLGAs = [
+    'Agege',
+    'Ajeromi-Ifelodun',
+    'Alimosho',
+    'Amuwo-Odofin',
+    'Apapa',
+    'Badagry',
+    'Epe',
+    'Eti-Osa',
+    'Ibeju-Lekki',
+    'Ifako-Ijaiye',
+    'Ikeja',
+    'Ikorodu',
+    'Kosofe',
+    'Lagos Island',
+    'Lagos Mainland',
+    'Mushin',
+    'Ojo',
+    'Oshodi-Isolo',
+    'Shomolu',
+    'Surulere',
+];
