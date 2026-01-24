@@ -10,7 +10,7 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGO_URL;
 const client = new MongoClient(uri);
 
 let db;
@@ -25,6 +25,16 @@ async function connectDB() {
     }
 }
 connectDB();
+
+// Health Check Endpoint
+app.get('/api/health', async (req, res) => {
+    const dbStatus = db ? "Connected" : "Disconnected";
+    res.status(200).json({
+        status: "OK",
+        database: dbStatus,
+        timestamp: new Date().toISOString()
+    });
+});
 
 // Analytics Track Endpoint
 app.post('/api/track', async (req, res) => {
