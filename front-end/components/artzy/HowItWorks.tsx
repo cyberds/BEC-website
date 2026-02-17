@@ -29,7 +29,7 @@ const HowItWorks = () => {
     ];
 
     return (
-        <section id="how-it-works" className="py-24 bg-neutral-950 relative overflow-hidden">
+        <section id="how-it-works" className="py-16 md:py-24 bg-neutral-950 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -40,7 +40,7 @@ const HowItWorks = () => {
                     <span className="text-amber-500 font-semibold text-sm uppercase tracking-wider mb-4 block">
                         Simple Process
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-black text-white">
+                    <h2 className="text-3xl md:text-5xl font-black text-white px-4">
                         How It <span className="text-gradient">Works</span>
                     </h2>
                 </motion.div>
@@ -76,8 +76,8 @@ const HowItWorks = () => {
                     ))}
                 </div>
 
-                {/* Mobile: Stacked cards */}
-                <div className="md:hidden space-y-6">
+                {/* Mobile: Horizontal Scroll */}
+                <div className="md:hidden flex overflow-x-auto pb-8 gap-4 px-4 -mx-6 snap-x snap-mandatory hide-scrollbar">
                     {steps.map((step, index) => (
                         <motion.div
                             key={index}
@@ -85,17 +85,17 @@ const HowItWorks = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 flex items-start gap-4"
+                            className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 flex flex-col items-center text-center gap-4 min-w-[75vw] snap-center"
                         >
-                            <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center relative">
-                                <span className="text-xl text-white">{step.icon}</span>
-                                <div className="absolute -top-1 -right-1 w-6 h-6 bg-black border-2 border-amber-500 rounded-full flex items-center justify-center text-amber-500 font-bold text-xs">
+                            <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center relative mb-2">
+                                <span className="text-2xl text-white">{step.icon}</span>
+                                <div className="absolute -top-1 -right-1 w-7 h-7 bg-black border-2 border-amber-500 rounded-full flex items-center justify-center text-amber-500 font-bold text-xs">
                                     {step.number}
                                 </div>
                             </div>
                             <div>
-                                <h3 className="text-lg font-bold text-white mb-1">{step.title}</h3>
-                                <p className="text-gray-400 text-sm mb-1">{step.description}</p>
+                                <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
+                                <p className="text-gray-400 text-sm mb-2">{step.description}</p>
                                 <p className="text-gray-500 text-xs">{step.detail}</p>
                             </div>
                         </motion.div>

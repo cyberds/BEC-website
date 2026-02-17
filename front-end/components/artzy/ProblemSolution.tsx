@@ -107,7 +107,7 @@ const ProblemSolution = () => {
     ];
 
     return (
-        <section id="problem-solution" className="py-24 bg-neutral-950 relative overflow-hidden">
+        <section id="problem-solution" className="py-16 md:py-24 bg-neutral-950 relative overflow-hidden">
             {/* Background decorations */}
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -119,45 +119,41 @@ const ProblemSolution = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
+                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6 px-4">
                         Polythene is Old.{' '}
-                        <span className="text-gradient">Safer, Smarter Boxes</span>{' '}
+                        <span className="text-gradient block md:inline">Safer, Smarter Boxes</span>{' '}
                         are the New Standard.
                     </h2>
                 </motion.div>
 
-                {/* Two column layout */}
+                {/* Two column layout - Mobile Horizontal Scroll / Desktop Grid */}
                 <div className="grid md:grid-cols-2 gap-12">
                     {/* Problems Column */}
                     <div>
-                        <h3 className="text-xl font-bold text-red-400 mb-6 flex items-center gap-2">
+                        <h3 className="text-xl font-bold text-red-400 mb-6 flex items-center gap-2 px-4 md:px-0">
                             <FaExclamationTriangle />
                             The Problem
                         </h3>
-                        <div className="space-y-4">
+                        <div className="flex md:block overflow-x-auto pb-8 md:pb-0 gap-4 px-4 md:px-0 snap-x snap-mandatory hide-scrollbar">
                             {problems.map((problem, index) => (
-                                <ExpandableCard
-                                    key={index}
-                                    {...problem}
-                                    type="problem"
-                                />
+                                <div key={index} className="min-w-[85vw] md:min-w-0 snap-center">
+                                    <ExpandableCard {...problem} type="problem" />
+                                </div>
                             ))}
                         </div>
                     </div>
 
                     {/* Solutions Column */}
                     <div>
-                        <h3 className="text-xl font-bold text-emerald-400 mb-6 flex items-center gap-2">
+                        <h3 className="text-xl font-bold text-emerald-400 mb-6 flex items-center gap-2 px-4 md:px-0">
                             <FaCheckCircle />
                             The Artzy Solution
                         </h3>
-                        <div className="space-y-4">
+                        <div className="flex md:block overflow-x-auto pb-8 md:pb-0 gap-4 px-4 md:px-0 snap-x snap-mandatory hide-scrollbar">
                             {solutions.map((solution, index) => (
-                                <ExpandableCard
-                                    key={index}
-                                    {...solution}
-                                    type="solution"
-                                />
+                                <div key={index} className="min-w-[85vw] md:min-w-0 snap-center">
+                                    <ExpandableCard {...solution} type="solution" />
+                                </div>
                             ))}
                         </div>
                     </div>

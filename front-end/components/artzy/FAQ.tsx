@@ -75,19 +75,19 @@ const FAQ = () => {
     ];
 
     return (
-        <section id="faq" className="py-24 bg-neutral-950 relative overflow-hidden">
+        <section id="faq" className="py-16 md:py-24 bg-neutral-950 relative overflow-hidden">
             <div className="max-w-3xl mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mb-12"
+                    className="text-center mb-16"
                 >
                     <span className="text-amber-500 font-semibold text-sm uppercase tracking-wider mb-4 block">
                         Got Questions?
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-black text-white flex items-center justify-center gap-3">
-                        <FaQuestionCircle className="text-amber-500" />
+                    <h2 className="text-2xl md:text-5xl font-black text-white flex flex-col md:flex-row items-center justify-center gap-3 px-4">
+                        <FaQuestionCircle className="text-amber-500 hidden md:block" />
                         <span>Frequently Asked <span className="text-gradient">Questions</span></span>
                     </h2>
                 </motion.div>

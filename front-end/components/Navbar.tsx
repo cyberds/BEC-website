@@ -28,25 +28,29 @@ const Navbar = () => {
                 </button>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu Overlay */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="absolute top-20 left-6 right-6 glass rounded-2xl p-6 md:hidden flex flex-col space-y-4 text-center"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/95 backdrop-blur-3xl z-40 md:hidden flex flex-col items-center justify-center space-y-8"
                     >
                         {['Home', 'Services', 'Partners', 'Contact'].map((item) => (
                             <Link
                                 key={item}
                                 href={`#${item.toLowerCase()}`}
                                 onClick={() => setIsOpen(false)}
-                                className="text-gray-200 text-lg py-2 hover:text-amber-500"
+                                className="text-gray-300 text-3xl font-bold tracking-tight hover:text-amber-500 transition-colors"
                             >
                                 {item}
                             </Link>
                         ))}
+
+                        <div className="absolute bottom-10 text-sm text-gray-500">
+                            BEC Artz &copy; {new Date().getFullYear()}
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

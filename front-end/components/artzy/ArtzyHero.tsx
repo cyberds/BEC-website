@@ -120,39 +120,42 @@ const ArtzyHero = () => {
             {/* Decorative background gradients */}
             <div className="absolute inset-0 bg-gradient-to-br from-amber-900/10 via-black to-purple-900/10" />
 
-            {/* Strip 1 - Initial state (left text, right image) */}
-            <div
-                ref={strip1Ref}
-                className={`absolute inset-0 flex items-center ${isMobile ? 'flex-col justify-center text-center px-6 pt-20' : 'justify-between px-12 lg:px-24'}`}
-                style={{ opacity: isMobile || prefersReducedMotion ? 0 : 1 }}
-            >
-                {/* Left side text */}
-                <div className={`z-10 ${isMobile ? 'mb-8' : 'max-w-xl'}`}>
-                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
-                        Let&apos;s step you up{' '}
-                        <span className="text-gradient">even more.</span>
-                    </h1>
-                    <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
-                        Artzy box — tamper-proof, previewable food packaging that sells your ad.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <Link
-                            href="#advertise"
-                            className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-amber-500/25 text-center"
-                        >
-                            Advertise on Artzy
-                        </Link>
-                        <Link
-                            href="#order"
-                            className="px-8 py-4 bg-white/10 backdrop-blur border border-white/20 text-white font-bold rounded-full hover:bg-white/20 transition-all text-center"
-                        >
-                            Order Artzy Boxes
-                        </Link>
+            {/* =========================================
+                DESKTOP VIEW (Width > 720px)
+               ========================================= */}
+            <div className="hidden min-[721px]:block absolute inset-0">
+                {/* Strip 1 - Initial state */}
+                <div
+                    ref={strip1Ref}
+                    className="absolute inset-0 flex items-center justify-between px-12 lg:px-24"
+                    style={{ opacity: prefersReducedMotion ? 0 : 1 }}
+                >
+                    {/* Left side text */}
+                    <div className="z-10 max-w-xl">
+                        <h1 className="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+                            Let&apos;s step you up{' '}
+                            <span className="text-gradient">even more.</span>
+                        </h1>
+                        <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+                            Artzy box — tamper-proof, previewable food packaging that sells your ad.
+                        </p>
+                        <div className="flex flex-row gap-4">
+                            <Link
+                                href="#advertise"
+                                className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-amber-500/25 text-center"
+                            >
+                                Advertise on Artzy
+                            </Link>
+                            <Link
+                                href="#order"
+                                className="px-8 py-4 bg-white/10 backdrop-blur border border-white/20 text-white font-bold rounded-full hover:bg-white/20 transition-all text-center"
+                            >
+                                Order Artzy Boxes
+                            </Link>
+                        </div>
                     </div>
-                </div>
 
-                {/* Right side - Box back image (desktop only for animation) */}
-                {!isMobile && (
+                    {/* Right side - Box back image */}
                     <div
                         ref={boxBackRef}
                         className="relative w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]"
@@ -166,95 +169,98 @@ const ArtzyHero = () => {
                             priority
                         />
                     </div>
-                )}
-            </div>
+                </div>
 
-            {/* Strip 2 - Final state (left image, right text) */}
-            <div
-                ref={strip2Ref}
-                className={`absolute inset-0 flex items-center ${isMobile ? 'flex-col justify-center text-center px-6 pt-20' : 'justify-between px-12 lg:px-24'}`}
-                style={{ opacity: isMobile || prefersReducedMotion ? 1 : 0 }}
-            >
-                {/* Left side - Box front image */}
+                {/* Strip 2 - Final state */}
                 <div
-                    ref={!isMobile ? boxFrontRef : undefined}
-                    className={`relative ${isMobile ? 'w-[280px] h-[280px] mb-8' : 'w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]'}`}
-                    style={{
-                        transformOrigin: 'center center',
-                        opacity: isMobile ? 1 : 0
-                    }}
+                    ref={strip2Ref}
+                    className="absolute inset-0 flex items-center justify-between px-12 lg:px-24"
+                    style={{ opacity: prefersReducedMotion ? 1 : 0 }}
                 >
-                    <Image
-                        src="/images/food_box front left transparent background.png"
-                        alt="Artzy Box Front"
-                        fill
-                        className="object-contain"
-                        priority
-                    />
-                </div>
-
-                {/* Right side text */}
-                <div className={`z-10 ${isMobile ? '' : 'max-w-xl text-right'}`}>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-8 leading-tight">
-                        Every Artzy box is a{' '}
-                        <span className="text-gradient">mobile billboard</span>{' '}
-                        — placing your message directly in customers&apos; hands, eyes, and everyday spaces.
-                    </h2>
-                    <div className={`flex gap-4 ${isMobile ? 'flex-col' : 'flex-row justify-end'}`}>
-                        <Link
-                            href="#advertise"
-                            className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-amber-500/25 text-center"
-                        >
-                            Advertise on Artzy
-                        </Link>
-                        <Link
-                            href="#order"
-                            className="px-8 py-4 bg-white/10 backdrop-blur border border-white/20 text-white font-bold rounded-full hover:bg-white/20 transition-all text-center"
-                        >
-                            Order Artzy Boxes
-                        </Link>
-                    </div>
-                </div>
-            </div>
-
-            {/* Mobile static view */}
-            {isMobile && (
-                <div className="flex flex-col items-center justify-center min-h-screen px-6 pt-20 pb-10 text-center">
-                    <h1 className="text-4xl font-black text-white mb-4 leading-tight">
-                        Let&apos;s step you up{' '}
-                        <span className="text-gradient">even more.</span>
-                    </h1>
-                    <p className="text-lg text-gray-300 mb-6">
-                        Artzy box — tamper-proof, previewable food packaging that sells your ad.
-                    </p>
-                    <div className="relative w-[280px] h-[280px] mb-6">
+                    {/* Left side - Box front image */}
+                    <div
+                        ref={boxFrontRef}
+                        className="relative w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]"
+                        style={{
+                            transformOrigin: 'center center',
+                            opacity: prefersReducedMotion ? 1 : 0
+                        }}
+                    >
                         <Image
                             src="/images/food_box front left transparent background.png"
-                            alt="Artzy Box"
+                            alt="Artzy Box Front"
                             fill
                             className="object-contain"
                             priority
                         />
                     </div>
-                    <p className="text-sm text-gray-400 mb-6 max-w-xs">
-                        Every Artzy box is a mobile billboard — placing your message directly in customers&apos; hands.
-                    </p>
-                    <div className="flex flex-col gap-4 w-full max-w-xs">
-                        <Link
-                            href="#advertise"
-                            className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-amber-500/25 text-center"
-                        >
-                            Advertise on Artzy
-                        </Link>
-                        <Link
-                            href="#order"
-                            className="px-8 py-4 bg-white/10 backdrop-blur border border-white/20 text-white font-bold rounded-full hover:bg-white/20 transition-all text-center"
-                        >
-                            Order Artzy Boxes
-                        </Link>
+
+                    {/* Right side text */}
+                    <div className="z-10 max-w-xl text-right">
+                        <h2 className="text-4xl lg:text-5xl font-black text-white mb-8 leading-tight">
+                            Every Artzy box is a{' '}
+                            <span className="text-gradient">mobile billboard</span>{' '}
+                            — placing your message directly in customers&apos; hands, eyes, and everyday spaces.
+                        </h2>
+                        <div className="flex flex-row justify-end gap-4">
+                            <Link
+                                href="#advertise"
+                                className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-amber-500/25 text-center"
+                            >
+                                Advertise on Artzy
+                            </Link>
+                            <Link
+                                href="#order"
+                                className="px-8 py-4 bg-white/10 backdrop-blur border border-white/20 text-white font-bold rounded-full hover:bg-white/20 transition-all text-center"
+                            >
+                                Order Artzy Boxes
+                            </Link>
+                        </div>
                     </div>
                 </div>
-            )}
+            </div>
+
+            {/* =========================================
+                MOBILE VIEW (Width <= 720px)
+               ========================================= */}
+            <div className="min-[721px]:hidden flex flex-col items-center justify-center min-h-[100dvh] px-6 pt-24 pb-10 text-center relative z-20">
+                <h1 className="text-4xl font-black text-white mb-4 leading-tight">
+                    Let&apos;s step you up{' '}
+                    <span className="text-gradient block mt-1">even more.</span>
+                </h1>
+                <p className="text-lg text-gray-300 mb-8 max-w-sm mx-auto">
+                    Artzy box — tamper-proof, previewable food packaging that sells your ad.
+                </p>
+
+                <div className="relative w-full max-w-[300px] aspect-square mb-8 animate-float">
+                    <Image
+                        src="/images/food_box front left transparent background.png"
+                        alt="Artzy Box"
+                        fill
+                        className="object-contain drop-shadow-2xl"
+                        priority
+                    />
+                </div>
+
+                <p className="text-sm text-gray-400 mb-6 max-w-xs mx-auto">
+                    Every Artzy box is a mobile billboard — placing your message directly in customers&apos; hands.
+                </p>
+
+                <div className="flex flex-col gap-4 w-full max-w-xs mx-auto">
+                    <Link
+                        href="#advertise"
+                        className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full hover:from-amber-600 hover:to-orange-700 transition-all shadow-lg shadow-amber-500/25 text-center active:scale-95 duration-200"
+                    >
+                        Advertise on Artzy
+                    </Link>
+                    <Link
+                        href="#order"
+                        className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-full hover:bg-white/20 transition-all text-center active:scale-95 duration-200"
+                    >
+                        Order Artzy Boxes
+                    </Link>
+                </div>
+            </div>
         </section>
     );
 };

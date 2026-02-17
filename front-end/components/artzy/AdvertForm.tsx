@@ -93,7 +93,7 @@ const AdvertForm = () => {
     };
 
     return (
-        <section id="submit-advert" className="py-24 bg-black relative overflow-hidden">
+        <section id="submit-advert" className="py-16 md:py-24 bg-black relative overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-black to-neutral-950" />
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-600/5 rounded-full blur-[128px]" />
@@ -108,7 +108,7 @@ const AdvertForm = () => {
                     <span className="text-amber-500 font-semibold text-sm uppercase tracking-wider mb-4 block">
                         Get Started
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
+                    <h2 className="text-3xl md:text-5xl font-black text-white mb-4 px-4">
                         Submit Your <span className="text-gradient">Advert</span>
                     </h2>
                     <p className="text-gray-400">No login required. We'll handle the rest.</p>

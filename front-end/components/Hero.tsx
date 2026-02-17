@@ -35,7 +35,7 @@ const Hero = () => {
             id="home"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative h-screen flex items-center justify-center overflow-hidden bg-black perspective-1000"
+            className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-black perspective-1000 pt-20 md:pt-0"
         >
             {/* Background 3D Shapes */}
             <motion.div
@@ -60,7 +60,7 @@ const Hero = () => {
                     style={{ transform: "translateZ(50px)" }}
                 >
                     <div className="absolute -inset-4 bg-gradient-to-r from-accent to-pink-500 rounded-3xl blur opacity-20 animate-pulse" />
-                    <div className="relative w-full max-w-lg mx-auto aspect-video rounded-3xl shadow-2xl border border-white/10 overflow-hidden transform-gpu">
+                    <div className="relative w-full max-w-lg mx-auto aspect-square md:aspect-video rounded-3xl shadow-2xl border border-white/10 overflow-hidden transform-gpu">
                         <Image
                             src="/images/art_craft.png"
                             alt="Artistic Work"
@@ -72,7 +72,7 @@ const Hero = () => {
 
                 <motion.h1
                     style={{ transform: "translateZ(100px)" }}
-                    className="text-5xl md:text-8xl font-black text-white tracking-tight mb-6"
+                    className="text-4xl sm:text-5xl md:text-8xl font-black text-white tracking-tight mb-4 md:mb-6"
                 >
                     We Create <br />
                     <span className="text-gradient">Masterpieces</span>
@@ -80,9 +80,9 @@ const Hero = () => {
 
                 <motion.p
                     style={{ transform: "translateZ(75px)" }}
-                    className="text-lg md:text-2xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed"
+                    className="text-base sm:text-lg md:text-2xl text-gray-400 mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-4"
                 >
-                    Arts, Media, Printing & Advertising. <br />
+                    Arts, Media, Printing & Advertising. <br className="hidden md:block" />
                     Elevating your brand with premium creativity and precision.
                 </motion.p>
 

@@ -139,7 +139,7 @@ const AdvertisingSection = () => {
     ];
 
     return (
-        <section id="advertise" className="py-24 bg-black relative overflow-hidden">
+        <section id="advertise" className="py-16 md:py-24 bg-black relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-black to-neutral-950" />
             <div className="absolute top-1/4 right-0 w-96 h-96 bg-amber-600/10 rounded-full blur-[128px]" />
@@ -155,17 +155,17 @@ const AdvertisingSection = () => {
                     <span className="text-amber-500 font-semibold text-sm uppercase tracking-wider mb-4 block">
                         Advertising That Actually Works
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
+                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6 px-4">
                         Your ad meets the customer{' '}
-                        <span className="text-gradient">where they are.</span>
+                        <span className="text-gradient block md:inline">where they are.</span>
                     </h2>
                     <p className="text-xl text-gray-300 max-w-3xl mx-auto">
                         Every Artzy box is a mobile billboard — placing your message directly in customers&apos; hands, eyes, and everyday spaces.
                     </p>
                 </motion.div>
 
-                {/* Benefits */}
-                <div className="grid md:grid-cols-3 gap-8 mb-16">
+                {/* Benefits - Mobile Horizontal Scroll / Desktop Grid */}
+                <div className="flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible pb-8 md:pb-0 gap-4 md:gap-8 px-4 md:px-0 -mx-6 md:mx-0 snap-x snap-mandatory hide-scrollbar mb-12 md:mb-16">
                     {benefits.map((benefit, index) => (
                         <motion.div
                             key={index}
@@ -173,7 +173,7 @@ const AdvertisingSection = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 text-center hover:border-amber-500/50 transition-colors"
+                            className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 text-center hover:border-amber-500/50 transition-colors min-w-[85vw] md:min-w-0 snap-center"
                         >
                             <div className="text-4xl text-amber-500 mb-4 flex justify-center">
                                 {benefit.icon}

@@ -27,7 +27,7 @@ const DeliveryCapacity = () => {
     ];
 
     return (
-        <section id="delivery" className="py-24 bg-neutral-950 relative overflow-hidden">
+        <section id="delivery" className="py-16 md:py-24 bg-neutral-950 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ const DeliveryCapacity = () => {
                     <span className="text-amber-500 font-semibold text-sm uppercase tracking-wider mb-4 block">
                         Production & Delivery
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-black text-white">
+                    <h2 className="text-3xl md:text-5xl font-black text-white px-4">
                         Fast & <span className="text-gradient">Reliable</span>
                     </h2>
                 </motion.div>

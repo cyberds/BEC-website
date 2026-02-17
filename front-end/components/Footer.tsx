@@ -9,7 +9,7 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left gap-8 mb-12">
 
                     {/* Brand section */}
-                    <div className="max-w-sm">
+                    <div className="max-w-sm mx-auto md:mx-0">
                         <Link href="/" className="text-2xl font-bold tracking-tighter text-white inline-block mb-4">
                             BEC<span className="text-amber-500">.</span>Artz
                         </Link>
