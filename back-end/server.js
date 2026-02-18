@@ -13,6 +13,17 @@ app.use(express.json());
 const uri = process.env.MONGO_URL;
 const client = new MongoClient(uri);
 
+// Cloudinary Config
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); // Temporary storage before upload
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 let db;
 
 async function connectDB() {
@@ -151,6 +162,31 @@ app.post('/api/pricing-request', async (req, res) => {
         res.status(200).json({ message: 'Pricing request saved successfully' });
     } catch (e) {
         res.status(500).json({ error: e.message });
+    }
+});
+
+// Cloudinary Upload Endpoint
+app.post('/api/upload', upload.array('files'), async (req, res) => {
+    try {
+        const files = req.files;
+        if (!files || files.length === 0) {
+            return res.status(400).json({ error: 'No files uploaded' });
+        }
+
+        const uploadPromises = files.map(file => {
+            return cloudinary.uploader.upload(file.path, {
+                folder: 'bec_adverts',
+                resource_type: 'auto'
+            });
+        });
+
+        const results = await Promise.all(uploadPromises);
+        const fileUrls = results.map(result => result.secure_url);
+
+        res.status(200).json({ urls: fileUrls });
+    } catch (e) {
+        console.error("Cloudinary Upload Error:", e);
+        res.status(500).json({ error: 'Failed to upload files' });
     }
 });
 

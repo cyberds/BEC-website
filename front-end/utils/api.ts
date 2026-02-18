@@ -21,6 +21,27 @@ export const apiCall = async (endpoint: string, method: 'GET' | 'POST' = 'GET', 
     }
 };
 
+export const uploadFiles = async (files: File[]) => {
+    try {
+        const formData = new FormData();
+        files.forEach(file => formData.append('files', file));
+
+        const response = await fetch(`${BASE_URL}/api/upload`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error(`Upload failed: ${response.statusText}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Upload Error:', error);
+        throw error;
+    }
+};
+
 export const sendContactMessage = (data: { name: string, email: string, message: string }) =>
     apiCall('/api/contact', 'POST', data);
 

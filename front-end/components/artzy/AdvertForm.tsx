@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaTimes, FaSearch, FaCheck } from 'react-icons/fa';
 import { lagosLGAs } from '@/utils/lagosLGAs';
-import { apiCall } from '@/utils/api';
+import { apiCall, uploadFiles } from '@/utils/api';
 
 interface FormData {
     name: string;
@@ -63,17 +63,27 @@ const AdvertForm = () => {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setStatus('loading');
 
-        // Construct WhatsApp Message
-        const fileCount = formData.advertDesign.length;
-        const fileNote = fileCount > 0
-            ? `📎 *Note:* I have ${fileCount} design file(s) to share:\n${formData.advertDesign.map(f => `- ${f.name}`).join('\n')}`
-            : '';
+        try {
+            // 1. Upload files if any
+            let fileUrls: string[] = [];
+            let fileNote = '';
 
-        const message = `*New Advert Submission*
-        
+            if (formData.advertDesign.length > 0) {
+                const response = await uploadFiles(formData.advertDesign);
+                fileUrls = response.urls || [];
+
+                fileNote = fileUrls.length > 0
+                    ? `📎 *Note:* I have uploaded ${fileUrls.length} design file(s):\n${fileUrls.join('\n')}`
+                    : '';
+            }
+
+            // 2. Construct WhatsApp Message
+            const message = `*New Advert Submission*
+            
 *Name:* ${formData.name}
 *Email:* ${formData.email}
 *Locations:* ${formData.targetLocation.join(', ')}
@@ -87,21 +97,23 @@ ${formData.advertText || 'No text provided'}
 ${fileNote}
 `;
 
-        // Encode message for URL
-        const encodedMessage = encodeURIComponent(message);
+            // 3. Encode & Redirect
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/2348084493832?text=${encodedMessage}`;
 
-        // WhatsApp URL
-        const whatsappUrl = `https://wa.me/2348084493832?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
 
-        // Open WhatsApp
-        window.open(whatsappUrl, '_blank');
+            setStatus('success');
+            setFormData({
+                name: '', email: '', targetLocation: [], advertDesign: [],
+                advertText: '', numBoxes: 50, website: '', whatsapp: ''
+            });
 
-        // Show success state locally
-        setStatus('success');
-        setFormData({
-            name: '', email: '', targetLocation: [], advertDesign: [],
-            advertText: '', numBoxes: 50, website: '', whatsapp: ''
-        });
+        } catch (error) {
+            console.error('Submission failed:', error);
+            setStatus('error');
+            alert('Failed to upload files. Please try again or skip file upload.');
+        }
     };
 
     return (

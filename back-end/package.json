@@ -7,11 +7,13 @@
         "dev": "nodemon server.js"
     },
     "dependencies": {
+        "cloudinary": "^2.9.0",
         "cors": "^2.8.5",
         "dotenv": "^16.3.1",
         "express": "^4.22.1",
         "geoip-lite": "^1.4.10",
-        "mongodb": "^6.3.0"
+        "mongodb": "^6.3.0",
+        "multer": "^2.0.2"
     },
     "devDependencies": {
         "nodemon": "^3.0.2"
