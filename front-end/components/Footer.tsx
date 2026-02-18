@@ -31,9 +31,12 @@ const Footer = () => {
                             <FaEnvelope />
                             Support@BECArtz.com
                         </a>
-                        <span className="flex items-center gap-2 text-gray-400">
-                            <FaMapMarkerAlt />
-                            Lagos, Nigeria
+                        <span className="flex items-start gap-2 text-gray-400 text-left">
+                            <FaMapMarkerAlt className="mt-1 flex-shrink-0" />
+                            <span>
+                                No 17 Alh Lasisi Street <br />
+                                Eleyin Ikola, Lagos
+                            </span>
                         </span>
                     </div>
 
@@ -60,7 +63,7 @@ const Footer = () => {
                 {/* Bottom bar */}
                 <div className="pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-gray-500 text-sm">
-                        © {new Date().getFullYear()} BEC Artz. All rights reserved.
+                        © {new Date().getFullYear()} BEC Artz. An <span className="text-white font-semibold">ArtizanSquare</span> company.
                     </p>
                     <p className="text-gray-600 text-sm">
                         Designed for Excellence.

@@ -45,8 +45,8 @@ const HowItWorks = () => {
                     </h2>
                 </motion.div>
 
-                {/* Desktop: Horizontal stepper */}
-                <div className="hidden md:flex items-start justify-between relative">
+                {/* DESKTOP VIEW (>720px) - HORIZONTAL STEPPER */}
+                <div className="hidden min-[721px]:flex items-start justify-between relative">
                     {/* Connection line */}
                     <div className="absolute top-12 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500" />
 
@@ -76,29 +76,28 @@ const HowItWorks = () => {
                     ))}
                 </div>
 
-                {/* Mobile: Horizontal Scroll */}
-                <div className="md:hidden flex overflow-x-auto pb-8 gap-4 px-4 -mx-6 snap-x snap-mandatory hide-scrollbar">
+                {/* MOBILE VIEW (<=720px) - VERTICAL STACK */}
+                <div className="min-[721px]:hidden flex flex-col gap-8 px-4">
                     {steps.map((step, index) => (
-                        <motion.div
+                        <div
                             key={index}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 flex flex-col items-center text-center gap-4 min-w-[75vw] snap-center"
+                            className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 flex items-start gap-4"
                         >
-                            <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center relative mb-2">
-                                <span className="text-2xl text-white">{step.icon}</span>
-                                <div className="absolute -top-1 -right-1 w-7 h-7 bg-black border-2 border-amber-500 rounded-full flex items-center justify-center text-amber-500 font-bold text-xs">
+                            {/* Icon */}
+                            <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center relative">
+                                <span className="text-lg text-white">{step.icon}</span>
+                                <div className="absolute -top-1 -right-1 w-5 h-5 bg-black border border-amber-500 rounded-full flex items-center justify-center text-amber-500 font-bold text-[10px]">
                                     {step.number}
                                 </div>
                             </div>
-                            <div>
-                                <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
-                                <p className="text-gray-400 text-sm mb-2">{step.description}</p>
+
+                            {/* Text */}
+                            <div className="text-left">
+                                <h3 className="text-lg font-bold text-white mb-1">{step.title}</h3>
+                                <p className="text-gray-400 text-sm mb-1">{step.description}</p>
                                 <p className="text-gray-500 text-xs">{step.detail}</p>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>

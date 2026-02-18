@@ -10,6 +10,9 @@ import AdvertForm from '@/components/artzy/AdvertForm';
 import FAQ from '@/components/artzy/FAQ';
 import Footer from '@/components/Footer';
 import WhatsAppBtn from '@/components/WhatsAppBtn';
+import Partners from '@/components/Partners';
+import AnalyticsFeature from '@/components/artzy/AnalyticsFeature';
+import TargetAudience from '@/components/artzy/TargetAudience';
 
 export default function Home() {
     return (
@@ -35,11 +38,20 @@ export default function Home() {
                 {/* Hero Section */}
                 <ArtzyHero />
 
+                {/* Partners - TRUST SIGNAL */}
+                <Partners />
+
                 {/* Problem & Solution */}
                 <ProblemSolution />
 
+                {/* Analytics Feature - "Clear Progress" */}
+                <AnalyticsFeature />
+
                 {/* Advertising That Works */}
                 <AdvertisingSection />
+
+                {/* Target Audience - "Who we advertise for" */}
+                <TargetAudience />
 
                 {/* How It Works */}
                 <HowItWorks />

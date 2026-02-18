@@ -24,53 +24,121 @@ const PricingSection = () => {
                     </h2>
                 </motion.div>
 
-                {/* Pricing cards - Mobile Horizontal Scroll / Desktop Grid */}
-                <div className="flex md:grid md:grid-cols-2 overflow-x-auto md:overflow-visible pb-8 md:pb-0 gap-4 md:gap-8 px-4 md:px-0 snap-x snap-mandatory hide-scrollbar">
-                    {/* Regular Price */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="bg-neutral-900/50 border border-neutral-800 rounded-3xl p-8 text-center min-w-[85vw] md:min-w-0 snap-center flex flex-col justify-between"
-                    >
-                        <div>
-                            <div className="text-amber-500 text-4xl mb-4 flex justify-center">
-                                <FaTag />
-                            </div>
-                            <h3 className="text-xl text-gray-400 mb-2">Regular Price</h3>
-                        </div>
-                        <div>
-                            <div className="text-5xl font-black text-white mb-2">
-                                ₦600
-                            </div>
-                            <p className="text-gray-500">per box</p>
-                        </div>
-                    </motion.div>
-
-                    {/* Sponsored Price */}
+                {/* DESKTOP VIEW (>720px) - STRICT GRID */}
+                <div className="hidden min-[721px]:grid grid-cols-3 gap-6">
+                    {/* Sides */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="bg-gradient-to-br from-amber-500/10 to-orange-600/10 border border-amber-500/30 rounded-3xl p-8 text-center relative min-w-[85vw] md:min-w-0 snap-center flex flex-col justify-between"
+                        className="bg-neutral-900/50 border border-neutral-800 rounded-3xl p-8 text-center flex flex-col justify-between hover:border-neutral-700 transition-colors"
                     >
-                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-600 px-4 py-1 rounded-full text-sm font-bold text-white whitespace-nowrap z-10">
-                            Best Value
-                        </div>
                         <div>
-                            <div className="text-amber-500 text-4xl mb-4 flex justify-center">
+                            <div className="text-amber-500 text-3xl mb-4 flex justify-center">
                                 <FaBoxes />
                             </div>
-                            <h3 className="text-xl text-amber-400 mb-2">With Advert Sponsorship</h3>
+                            <h3 className="text-xl text-gray-400 mb-2">Sides Only</h3>
+                            <p className="text-sm text-gray-500 mb-6">Create awareness from every angle</p>
                         </div>
                         <div>
                             <div className="text-5xl font-black text-white mb-2">
-                                ₦200
+                                ₦500
+                            </div>
+                            <p className="text-gray-500">each side</p>
+                        </div>
+                    </motion.div>
+
+                    {/* Back - Highlighted */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="bg-gradient-to-b from-neutral-800 to-neutral-900 border border-amber-500/30 rounded-3xl p-8 text-center flex flex-col justify-between relative transform scale-105 shadow-xl shadow-black/50 z-10"
+                    >
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-amber-500 text-black font-bold px-4 py-1 rounded-b-xl text-sm">
+                            Popular
+                        </div>
+                        <div>
+                            <div className="text-amber-500 text-4xl mb-4 flex justify-center mt-4">
+                                <FaTag />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white mb-2">Back Panel</h3>
+                            <p className="text-sm text-gray-400 mb-6">Maximum visibility as they eat</p>
+                        </div>
+                        <div>
+                            <div className="text-5xl font-black text-white mb-2">
+                                ₦800
                             </div>
                             <p className="text-gray-400">per box</p>
                         </div>
                     </motion.div>
+
+                    {/* Full Box */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="bg-neutral-900/50 border border-neutral-800 rounded-3xl p-8 text-center flex flex-col justify-between hover:border-neutral-700 transition-colors"
+                    >
+                        <div>
+                            <div className="text-emerald-500 text-3xl mb-4 flex justify-center">
+                                <FaTruck />
+                            </div>
+                            <h3 className="text-xl text-gray-400 mb-2">Full Box</h3>
+                            <p className="text-sm text-gray-500 mb-6">Total brand domination</p>
+                        </div>
+                        <div>
+                            <div className="text-5xl font-black text-white mb-2">
+                                ₦1,500
+                            </div>
+                            <p className="text-gray-500">per box</p>
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* MOBILE VIEW (<=720px) - VERTICAL STACK */}
+                <div className="min-[721px]:hidden flex flex-col gap-6 px-4">
+                    {/* Back - Highlighted first on mobile */}
+                    <div className="bg-gradient-to-r from-neutral-800 to-neutral-900 border border-amber-500/30 rounded-3xl p-8 text-center relative">
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-black px-4 py-1 rounded-full text-xs font-bold whitespace-nowrap z-10">
+                            Most Popular
+                        </div>
+                        <div className="text-amber-500 text-3xl mb-4 flex justify-center">
+                            <FaTag />
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-1">Back Panel</h3>
+                        <p className="text-sm text-gray-400 mb-4">Maximum visibility</p>
+                        <div className="text-4xl font-black text-white mb-1">
+                            ₦800
+                        </div>
+                        <p className="text-sm text-gray-400">per box</p>
+                    </div>
+
+                    {/* Sides */}
+                    <div className="bg-neutral-900/50 border border-neutral-800 rounded-3xl p-8 text-center">
+                        <div className="text-amber-500 text-3xl mb-4 flex justify-center">
+                            <FaBoxes />
+                        </div>
+                        <h3 className="text-lg text-gray-400 mb-1">Sides Only</h3>
+                        <div className="text-4xl font-black text-white mb-1">
+                            ₦500
+                        </div>
+                        <p className="text-sm text-gray-500">each side</p>
+                    </div>
+
+                    {/* Full Box */}
+                    <div className="bg-neutral-900/50 border border-neutral-800 rounded-3xl p-8 text-center">
+                        <div className="text-emerald-500 text-3xl mb-4 flex justify-center">
+                            <FaTruck />
+                        </div>
+                        <h3 className="text-lg text-gray-400 mb-1">Full Box</h3>
+                        <div className="text-4xl font-black text-white mb-1">
+                            ₦1,500
+                        </div>
+                        <p className="text-sm text-gray-500">complete branding</p>
+                    </div>
                 </div>
 
                 {/* Conditions */}

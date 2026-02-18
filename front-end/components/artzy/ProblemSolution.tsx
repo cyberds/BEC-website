@@ -126,34 +126,67 @@ const ProblemSolution = () => {
                     </h2>
                 </motion.div>
 
-                {/* Two column layout - Mobile Horizontal Scroll / Desktop Grid */}
-                <div className="grid md:grid-cols-2 gap-12">
+                {/* DESKTOP VIEW (>720px) - STRICT GRID */}
+                <div className="hidden min-[721px]:grid grid-cols-2 gap-12">
                     {/* Problems Column */}
                     <div>
-                        <h3 className="text-xl font-bold text-red-400 mb-6 flex items-center gap-2 px-4 md:px-0">
+                        <h3 className="text-xl font-bold text-red-400 mb-6 flex items-center gap-2">
                             <FaExclamationTriangle />
                             The Problem
                         </h3>
-                        <div className="flex md:block overflow-x-auto pb-8 md:pb-0 gap-4 px-4 md:px-0 snap-x snap-mandatory hide-scrollbar">
+                        <div className="space-y-4">
                             {problems.map((problem, index) => (
-                                <div key={index} className="min-w-[85vw] md:min-w-0 snap-center">
-                                    <ExpandableCard {...problem} type="problem" />
-                                </div>
+                                <ExpandableCard
+                                    key={index}
+                                    {...problem}
+                                    type="problem"
+                                />
                             ))}
                         </div>
                     </div>
 
                     {/* Solutions Column */}
                     <div>
-                        <h3 className="text-xl font-bold text-emerald-400 mb-6 flex items-center gap-2 px-4 md:px-0">
+                        <h3 className="text-xl font-bold text-emerald-400 mb-6 flex items-center gap-2">
                             <FaCheckCircle />
                             The Artzy Solution
                         </h3>
-                        <div className="flex md:block overflow-x-auto pb-8 md:pb-0 gap-4 px-4 md:px-0 snap-x snap-mandatory hide-scrollbar">
+                        <div className="space-y-4">
                             {solutions.map((solution, index) => (
-                                <div key={index} className="min-w-[85vw] md:min-w-0 snap-center">
-                                    <ExpandableCard {...solution} type="solution" />
-                                </div>
+                                <ExpandableCard
+                                    key={index}
+                                    {...solution}
+                                    type="solution"
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* MOBILE VIEW (<=720px) - VERTICAL STACK */}
+                <div className="min-[721px]:hidden space-y-16">
+                    {/* Problems - Vertical Stack */}
+                    <div>
+                        <h3 className="text-xl font-bold text-red-400 mb-6 flex items-center gap-2 px-4">
+                            <FaExclamationTriangle />
+                            The Problem
+                        </h3>
+                        <div className="flex flex-col gap-6 px-4">
+                            {problems.map((problem, index) => (
+                                <ExpandableCard key={index} {...problem} type="problem" />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Solutions - Vertical Stack */}
+                    <div>
+                        <h3 className="text-xl font-bold text-emerald-400 mb-6 flex items-center gap-2 px-4">
+                            <FaCheckCircle />
+                            The Artzy Solution
+                        </h3>
+                        <div className="flex flex-col gap-6 px-4">
+                            {solutions.map((solution, index) => (
+                                <ExpandableCard key={index} {...solution} type="solution" />
                             ))}
                         </div>
                     </div>

@@ -164,8 +164,8 @@ const AdvertisingSection = () => {
                     </p>
                 </motion.div>
 
-                {/* Benefits - Mobile Horizontal Scroll / Desktop Grid */}
-                <div className="flex md:grid md:grid-cols-3 overflow-x-auto md:overflow-visible pb-8 md:pb-0 gap-4 md:gap-8 px-4 md:px-0 -mx-6 md:mx-0 snap-x snap-mandatory hide-scrollbar mb-12 md:mb-16">
+                {/* DESKTOP VIEW (>720px) - GRID */}
+                <div className="hidden min-[721px]:grid grid-cols-3 gap-8 mb-16">
                     {benefits.map((benefit, index) => (
                         <motion.div
                             key={index}
@@ -173,7 +173,7 @@ const AdvertisingSection = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 text-center hover:border-amber-500/50 transition-colors min-w-[85vw] md:min-w-0 snap-center"
+                            className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 text-center hover:border-amber-500/50 transition-colors"
                         >
                             <div className="text-4xl text-amber-500 mb-4 flex justify-center">
                                 {benefit.icon}
@@ -181,6 +181,22 @@ const AdvertisingSection = () => {
                             <h3 className="text-xl font-bold text-white mb-2">{benefit.title}</h3>
                             <p className="text-gray-400">{benefit.description}</p>
                         </motion.div>
+                    ))}
+                </div>
+
+                {/* MOBILE VIEW (<=720px) - VERTICAL STACK */}
+                <div className="min-[721px]:hidden flex flex-col gap-6 px-4 mb-12">
+                    {benefits.map((benefit, index) => (
+                        <div
+                            key={index}
+                            className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 text-center"
+                        >
+                            <div className="text-3xl text-amber-500 mb-3 flex justify-center">
+                                {benefit.icon}
+                            </div>
+                            <h3 className="text-lg font-bold text-white mb-1">{benefit.title}</h3>
+                            <p className="text-gray-400 text-sm">{benefit.description}</p>
+                        </div>
                     ))}
                 </div>
 

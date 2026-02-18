@@ -10,7 +10,7 @@ interface FormData {
     name: string;
     email: string;
     targetLocation: string[];
-    advertDesign: File | null;
+    advertDesign: File[];
     advertText: string;
     numBoxes: number;
     website: string;
@@ -22,7 +22,7 @@ const AdvertForm = () => {
         name: '',
         email: '',
         targetLocation: [],
-        advertDesign: null,
+        advertDesign: [],
         advertText: '',
         numBoxes: 50,
         website: '',
@@ -58,38 +58,50 @@ const AdvertForm = () => {
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setFormData(prev => ({ ...prev, advertDesign: e.target.files![0] }));
+        if (e.target.files) {
+            setFormData(prev => ({ ...prev, advertDesign: Array.from(e.target.files || []) }));
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setStatus('loading');
 
-        try {
-            // Create form data for submission (without the file for now, just the metadata)
-            const submitData = {
-                name: formData.name,
-                email: formData.email,
-                targetLocation: formData.targetLocation,
-                advertText: formData.advertText,
-                numBoxes: formData.numBoxes,
-                website: formData.website,
-                whatsapp: formData.whatsapp,
-                hasDesignFile: !!formData.advertDesign,
-                designFileName: formData.advertDesign?.name || null
-            };
+        // Construct WhatsApp Message
+        const fileCount = formData.advertDesign.length;
+        const fileNote = fileCount > 0
+            ? `📎 *Note:* I have ${fileCount} design file(s) to share:\n${formData.advertDesign.map(f => `- ${f.name}`).join('\n')}`
+            : '';
 
-            await apiCall('/api/advert-submission', 'POST', submitData);
-            setStatus('success');
-            setFormData({
-                name: '', email: '', targetLocation: [], advertDesign: null,
-                advertText: '', numBoxes: 50, website: '', whatsapp: ''
-            });
-        } catch (error) {
-            setStatus('error');
-        }
+        const message = `*New Advert Submission*
+        
+*Name:* ${formData.name}
+*Email:* ${formData.email}
+*Locations:* ${formData.targetLocation.join(', ')}
+*Boxes:* ${formData.numBoxes}
+*Website:* ${formData.website}
+*WhatsApp:* ${formData.whatsapp}
+
+*Advert Details:*
+${formData.advertText || 'No text provided'}
+
+${fileNote}
+`;
+
+        // Encode message for URL
+        const encodedMessage = encodeURIComponent(message);
+
+        // WhatsApp URL
+        const whatsappUrl = `https://wa.me/2348084493832?text=${encodedMessage}`;
+
+        // Open WhatsApp
+        window.open(whatsappUrl, '_blank');
+
+        // Show success state locally
+        setStatus('success');
+        setFormData({
+            name: '', email: '', targetLocation: [], advertDesign: [],
+            advertText: '', numBoxes: 50, website: '', whatsapp: ''
+        });
     };
 
     return (
@@ -121,10 +133,16 @@ const AdvertForm = () => {
                         className="bg-emerald-900/20 border border-emerald-500/30 rounded-3xl p-12 text-center"
                     >
                         <div className="text-6xl mb-4">✅</div>
-                        <h3 className="text-2xl font-bold text-white mb-2">Submission Received!</h3>
+                        <h3 className="text-2xl font-bold text-white mb-2">Redirecting to WhatsApp...</h3>
                         <p className="text-gray-400">
-                            We'll review your request and contact you via WhatsApp or email shortly.
+                            Please complete your submission by sending the pre-filled message.
                         </p>
+                        <button
+                            onClick={() => setStatus('idle')}
+                            className="mt-6 text-amber-500 hover:text-amber-400 underline"
+                        >
+                            Submit another advert
+                        </button>
                     </motion.div>
                 ) : (
                     <motion.form
@@ -233,6 +251,7 @@ const AdvertForm = () => {
                             <div className="relative">
                                 <input
                                     type="file"
+                                    multiple
                                     accept="image/*,.pdf,.ai,.psd"
                                     onChange={handleFileChange}
                                     className="hidden"
@@ -240,14 +259,22 @@ const AdvertForm = () => {
                                 />
                                 <label
                                     htmlFor="advert-file"
-                                    className="flex items-center justify-center gap-3 w-full bg-neutral-800/50 border border-dashed border-neutral-600 rounded-xl px-5 py-6 text-gray-400 cursor-pointer hover:border-amber-500 hover:text-amber-500 transition-colors"
+                                    className="flex flex-col items-center justify-center gap-3 w-full bg-neutral-800/50 border border-dashed border-neutral-600 rounded-xl px-5 py-6 text-gray-400 cursor-pointer hover:border-amber-500 hover:text-amber-500 transition-colors"
                                 >
-                                    {formData.advertDesign ? (
-                                        <span className="text-amber-500">📎 {formData.advertDesign.name}</span>
+                                    {formData.advertDesign.length > 0 ? (
+                                        <div className="text-center">
+                                            <span className="text-amber-500 font-bold block mb-1">
+                                                {formData.advertDesign.length} file(s) selected
+                                            </span>
+                                            <div className="text-xs text-gray-400 max-w-xs mx-auto truncate">
+                                                {formData.advertDesign.map(f => f.name).join(', ')}
+                                            </div>
+                                        </div>
                                     ) : (
                                         <>
-                                            <span>📤</span>
-                                            <span>Upload design file (PNG, PDF, AI, PSD)</span>
+                                            <span className="text-2xl">📤</span>
+                                            <span>Upload design files (Select multiple)</span>
+                                            <span className="text-xs text-gray-500">PNG, PDF, AI, PSD accepted</span>
                                         </>
                                     )}
                                 </label>
