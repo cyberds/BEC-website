@@ -13,7 +13,8 @@
         "express": "^4.22.1",
         "geoip-lite": "^1.4.10",
         "mongodb": "^6.3.0",
-        "multer": "^2.0.2"
+        "multer": "^2.0.2",
+        "sqlite3": "^5.1.7"
     },
     "devDependencies": {
         "nodemon": "^3.0.2"

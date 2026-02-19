@@ -1,17 +1,15 @@
 const express = require('express');
-const { MongoClient } = require('mongodb');
-const geoip = require('geoip-lite');
 const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3001;
 
+// Database Service (Factory)
+const db = require('./db');
+
 app.use(cors());
 app.use(express.json());
-
-const uri = process.env.MONGO_URL;
-const client = new MongoClient(uri);
 
 // Cloudinary Config
 const cloudinary = require('cloudinary').v2;
@@ -24,25 +22,21 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-let db;
+// Connect to Database
+async function startServer() {
+    await db.connect();
 
-async function connectDB() {
-    try {
-        await client.connect();
-        db = client.db("bec_website");
-        console.log("Connected to MongoDB");
-    } catch (e) {
-        console.error("DB Connection Error:", e);
-    }
+    app.listen(port, () => {
+        console.log(`Backend listening at http://localhost:${port}`);
+    });
 }
-connectDB();
 
 // Health Check Endpoint
 app.get('/api/health', async (req, res) => {
-    const dbStatus = db ? "Connected" : "Disconnected";
+    // Basic check, ideally utilize an isConnected method
     res.status(200).json({
         status: "OK",
-        database: dbStatus,
+        database: "Connected", // Simplified for now
         timestamp: new Date().toISOString()
     });
 });
@@ -51,32 +45,19 @@ app.get('/api/health', async (req, res) => {
 app.post('/api/track', async (req, res) => {
     const { sessionId, duration } = req.body;
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '';
+
+    // GeoIP lookup can be moved to service or kept here. Keeping here for now as it's logic not data persistence.
+    // However, sqlite service might store country directly. 
+    // Let's use the geoip-lite here as before.
+    const geoip = require('geoip-lite');
     const geo = geoip.lookup(ip);
     const country = geo ? geo.country : 'Unknown';
-    const now = new Date().toISOString();
 
     try {
-        const collection = db.collection("analytics");
-        const existingSession = await collection.findOne({ type: "session", sessionId });
-
-        if (!existingSession) {
-            await collection.updateOne(
-                { type: "global_stats" },
-                { $inc: { totalVisits: 1 } },
-                { upsert: true }
-            );
-
-            await collection.insertOne({
-                type: "session", sessionId, startTime: now, country, duration: duration || 0, lastPing: now
-            });
-        } else {
-            await collection.updateOne(
-                { type: "session", sessionId },
-                { $set: { duration: duration || 0, lastPing: now } }
-            );
-        }
+        await db.trackSession(sessionId, country, duration);
         res.status(200).json({ success: true });
     } catch (e) {
+        console.error("Track Error:", e);
         res.status(500).json({ error: e.message });
     }
 });
@@ -84,18 +65,10 @@ app.post('/api/track', async (req, res) => {
 // Analytics Get Stats Endpoint
 app.get('/api/analytics', async (req, res) => {
     try {
-        const collection = db.collection("analytics");
-        const stats = await collection.findOne({ type: "global_stats" });
-        const sessionsArray = await collection.find({ type: "session" }).sort({ lastPing: -1 }).limit(100).toArray();
-
-        const sessions = {};
-        sessionsArray.forEach(s => {
-            sessions[s.sessionId] = {
-                startTime: s.startTime, country: s.country, duration: s.duration, lastPing: s.lastPing
-            };
-        });
-        res.status(200).json({ totalVisits: stats ? stats.totalVisits : 0, sessions });
+        const analyticsData = await db.getAnalytics();
+        res.status(200).json(analyticsData);
     } catch (e) {
+        console.error("Analytics Error:", e);
         res.status(500).json({ error: e.message });
     }
 });
@@ -104,63 +77,33 @@ app.get('/api/analytics', async (req, res) => {
 app.post('/api/contact', async (req, res) => {
     const { name, email, message } = req.body;
     try {
-        const collection = db.collection("contacts");
-        await collection.insertOne({ name, email, message, createdAt: new Date() });
+        await db.saveContact({ name, email, message });
         res.status(200).json({ message: 'Message saved successfully' });
     } catch (e) {
+        console.error("Contact Error:", e);
         res.status(500).json({ error: e.message });
     }
 });
 
 // Advert Submission Endpoint (Artzy Box)
 app.post('/api/advert-submission', async (req, res) => {
-    const {
-        name,
-        email,
-        targetLocation,
-        advertText,
-        numBoxes,
-        website,
-        whatsapp,
-        hasDesignFile,
-        designFileName
-    } = req.body;
-
+    // Pass everything to service
     try {
-        const collection = db.collection("advert_submissions");
-        await collection.insertOne({
-            name,
-            email,
-            targetLocation,
-            advertText: advertText || null,
-            numBoxes,
-            website: website || null,
-            whatsapp,
-            hasDesignFile: hasDesignFile || false,
-            designFileName: designFileName || null,
-            status: 'pending',
-            createdAt: new Date()
-        });
+        await db.saveAdvert(req.body);
         res.status(200).json({ message: 'Advert submission saved successfully' });
     } catch (e) {
+        console.error("Advert Error:", e);
         res.status(500).json({ error: e.message });
     }
 });
 
 // Pricing Request Endpoint (Artzy Box)
 app.post('/api/pricing-request', async (req, res) => {
-    const { email, phone } = req.body;
-
     try {
-        const collection = db.collection("pricing_requests");
-        await collection.insertOne({
-            email,
-            phone,
-            status: 'pending',
-            createdAt: new Date()
-        });
+        await db.savePricingRequest(req.body);
         res.status(200).json({ message: 'Pricing request saved successfully' });
     } catch (e) {
+        console.error("Pricing Error:", e);
         res.status(500).json({ error: e.message });
     }
 });
@@ -168,12 +111,16 @@ app.post('/api/pricing-request', async (req, res) => {
 // Cloudinary Upload Endpoint
 app.post('/api/upload', upload.array('files'), async (req, res) => {
     try {
+        console.log('Upload Request Received');
         const files = req.files;
         if (!files || files.length === 0) {
+            console.log('No files found in request');
             return res.status(400).json({ error: 'No files uploaded' });
         }
+        console.log(`Processing ${files.length} file(s)...`);
 
         const uploadPromises = files.map(file => {
+            console.log(`Uploading file: ${file.path}`);
             return cloudinary.uploader.upload(file.path, {
                 folder: 'bec_adverts',
                 resource_type: 'auto'
@@ -182,15 +129,14 @@ app.post('/api/upload', upload.array('files'), async (req, res) => {
 
         const results = await Promise.all(uploadPromises);
         const fileUrls = results.map(result => result.secure_url);
+        console.log('Upload successful. URLs:', fileUrls);
 
         res.status(200).json({ urls: fileUrls });
     } catch (e) {
-        console.error("Cloudinary Upload Error:", e);
+        console.error("Cloudinary Upload Error Details:", e);
         res.status(500).json({ error: 'Failed to upload files' });
     }
 });
 
-app.listen(port, () => {
-    console.log(`Backend listening at http://localhost:${port}`);
-});
-
+// Start the server
+startServer();

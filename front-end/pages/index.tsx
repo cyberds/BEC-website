@@ -38,8 +38,7 @@ export default function Home() {
                 {/* Hero Section */}
                 <ArtzyHero />
 
-                {/* Partners - TRUST SIGNAL */}
-                <Partners />
+
 
                 {/* Problem & Solution */}
                 <ProblemSolution />
@@ -67,6 +66,9 @@ export default function Home() {
 
                 {/* FAQ */}
                 <FAQ />
+
+                {/* Partners - TRUST SIGNAL */}
+                <Partners />
 
                 {/* Footer */}
                 <Footer />

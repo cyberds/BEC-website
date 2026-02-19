@@ -40,11 +40,16 @@ body {
   }
 
   .animate-marquee {
-    animation: marquee 25s linear infinite;
+    animation: marquee 60s linear infinite;
   }
 
   .animate-marquee2 {
-    animation: marquee2 25s linear infinite;
+    animation: marquee2 60s linear infinite;
+  }
+
+  .group:hover .animate-marquee,
+  .group:hover .animate-marquee2 {
+    animation-play-state: paused;
   }
 
   @keyframes marquee {

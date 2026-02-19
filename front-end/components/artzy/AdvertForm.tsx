@@ -13,6 +13,7 @@ interface FormData {
     advertDesign: File[];
     advertText: string;
     numBoxes: number;
+    plan: string;
     website: string;
     whatsapp: string;
 }
@@ -25,6 +26,7 @@ const AdvertForm = () => {
         advertDesign: [],
         advertText: '',
         numBoxes: 50,
+        plan: 'Back Panel', // Default to most popular
         website: '',
         whatsapp: ''
     });
@@ -86,6 +88,7 @@ const AdvertForm = () => {
             
 *Name:* ${formData.name}
 *Email:* ${formData.email}
+*Plan:* ${formData.plan}
 *Locations:* ${formData.targetLocation.join(', ')}
 *Boxes:* ${formData.numBoxes}
 *Website:* ${formData.website}
@@ -164,6 +167,40 @@ ${fileNote}
                         onSubmit={handleSubmit}
                         className="bg-neutral-900/50 border border-neutral-800 rounded-3xl p-8 space-y-6"
                     >
+                        {/* Plan Selection */}
+                        <div>
+                            <label className="text-sm text-gray-400 mb-4 block">Select Plan *</label>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                {[
+                                    { name: 'Sides Only', price: '₦500', desc: 'Sides only' },
+                                    { name: 'Back Panel', price: '₦800', desc: 'High visibility', popular: true },
+                                    { name: 'Full Box', price: '₦1,500', desc: 'Complete branding' }
+                                ].map((plan) => (
+                                    <div
+                                        key={plan.name}
+                                        onClick={() => setFormData({ ...formData, plan: plan.name })}
+                                        className={`cursor-pointer rounded-xl p-4 border transition-all ${formData.plan === plan.name
+                                            ? 'bg-amber-500/20 border-amber-500'
+                                            : 'bg-black/30 border-neutral-700 hover:border-neutral-500'
+                                            }`}
+                                    >
+                                        <div className="flex justify-between items-start mb-2">
+                                            <span className={`font-bold ${formData.plan === plan.name ? 'text-amber-500' : 'text-white'}`}>
+                                                {plan.name}
+                                            </span>
+                                            {plan.popular && (
+                                                <span className="text-[10px] bg-amber-500 text-black px-2 py-0.5 rounded-full font-bold">
+                                                    POPULAR
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div className="text-2xl font-black text-white mb-1">{plan.price}</div>
+                                        <p className="text-xs text-gray-400">{plan.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
                         {/* Name */}
                         <div>
                             <label className="text-sm text-gray-400 mb-2 block">Name *</label>
@@ -274,19 +311,40 @@ ${fileNote}
                                     className="flex flex-col items-center justify-center gap-3 w-full bg-neutral-800/50 border border-dashed border-neutral-600 rounded-xl px-5 py-6 text-gray-400 cursor-pointer hover:border-amber-500 hover:text-amber-500 transition-colors"
                                 >
                                     {formData.advertDesign.length > 0 ? (
-                                        <div className="text-center">
-                                            <span className="text-amber-500 font-bold block mb-1">
-                                                {formData.advertDesign.length} file(s) selected
-                                            </span>
-                                            <div className="text-xs text-gray-400 max-w-xs mx-auto truncate">
-                                                {formData.advertDesign.map(f => f.name).join(', ')}
+                                        <div className="w-full">
+                                            <div className="text-center mb-4">
+                                                <span className="text-amber-500 font-bold block mb-1">
+                                                    {formData.advertDesign.length} file(s) selected
+                                                </span>
+                                                <span className="text-xs text-gray-400">Click to change</span>
+                                            </div>
+
+                                            {/* Image Previews */}
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                                {formData.advertDesign.map((file, idx) => (
+                                                    <div key={idx} className="relative aspect-square bg-neutral-900 rounded-lg overflow-hidden border border-neutral-700">
+                                                        {file.type.startsWith('image/') ? (
+                                                            <img
+                                                                src={URL.createObjectURL(file)}
+                                                                alt="preview"
+                                                                className="w-full h-full object-cover"
+                                                                onLoad={(e) => URL.revokeObjectURL((e.target as HTMLImageElement).src)}
+                                                            />
+                                                        ) : (
+                                                            <div className="w-full h-full flex items-center justify-center text-gray-500 flex-col p-2 text-center">
+                                                                <span className="text-2xl mb-1">📄</span>
+                                                                <span className="text-[10px] break-all leading-tight">{file.name}</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                     ) : (
                                         <>
                                             <span className="text-2xl">📤</span>
                                             <span>Upload design files (Select multiple)</span>
-                                            <span className="text-xs text-gray-500">PNG, PDF, AI, PSD accepted</span>
+                                            <span className="text-xs text-gray-500">PNG, JPG, PDF, AI accepted</span>
                                         </>
                                     )}
                                 </label>
