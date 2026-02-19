@@ -11,25 +11,26 @@ const LogoPlaceholder = ({ name, color }: { name: string, color: string }) => (
 );
 
 const Partners = () => {
+    // PASTE YOUR LOGO LINKS HERE
     const partners = [
-        // Ad Partners (Real Logos)
-        { name: 'Talentta', logo: '/logos/talentta.png' },
-        { name: 'Emmviron', logo: '/logos/emmviron.png' },
-        { name: 'Aiden', logo: '/logos/aiden.png' },
+        // Ad Partners
+        { name: 'Talentta', logo: 'https://placehold.co/200x100?text=Talentta' }, // Replace with Link
+        { name: 'Emmviron', logo: 'https://placehold.co/200x100?text=Emmviron' }, // Replace with Link
+        { name: 'Aiden', logo: 'https://placehold.co/200x100?text=Aiden' }, // Replace with Link
 
         // Outlet Partners & Lagos Eateries
-        { name: 'JoyceSuperKitchen', logo: '/logos/joyce.png' },
-        { name: 'Mega Chicken', logo: '/logos/megachicken.png' },
-        { name: 'The Place', logo: '/logos/theplace.png' },
-        { name: 'Sweet Sensation', logo: '/logos/sweet_sensation.png' },
-        { name: 'Chicken Republic', logo: '/logos/chicken_republic.png' },
-        { name: 'Kilimanjaro', logo: '/logos/kilimanjaro.png' },
-        { name: 'Tantalizers', logo: '/logos/tantalizers.png' },
-        { name: 'Tastee Fried Chicken', logo: '/logos/tastee.png' },
-        { name: 'Dominos', logo: '/logos/dominos.png' },
-        { name: 'Cold Stone', logo: '/logos/coldstone.png' },
-        { name: 'Yakoyo', logo: '/logos/yakoyo.png' },
-        { name: 'Debonairs', logo: '/logos/debonairs.png' },
+        { name: 'JoyceSuperKitchen', logo: 'https://placehold.co/200x100?text=Joyce' }, // Replace with Link
+        { name: 'Mega Chicken', logo: 'https://placehold.co/200x100?text=Mega+Chicken' },
+        { name: 'The Place', logo: 'https://placehold.co/200x100?text=The+Place' },
+        { name: 'Sweet Sensation', logo: 'https://placehold.co/200x100?text=Sweet+Sensation' },
+        { name: 'Chicken Republic', logo: 'https://placehold.co/200x100?text=Chicken+Republic' },
+        { name: 'Kilimanjaro', logo: 'https://placehold.co/200x100?text=Kilimanjaro' },
+        { name: 'Tantalizers', logo: 'https://placehold.co/200x100?text=Tantalizers' },
+        { name: 'Tastee Fried Chicken', logo: 'https://placehold.co/200x100?text=Tastee' },
+        { name: 'Dominos', logo: 'https://placehold.co/200x100?text=Dominos' },
+        { name: 'Cold Stone', logo: 'https://placehold.co/200x100?text=Cold+Stone' },
+        { name: 'Yakoyo', logo: 'https://placehold.co/200x100?text=Yakoyo' },
+        { name: 'Debonairs', logo: 'https://placehold.co/200x100?text=Debonairs' },
     ];
 
     // Duplicate list multiple times for smoother seamless loop on wide screens
@@ -53,21 +54,13 @@ const Partners = () => {
                     {marqueeList.map((partner, index) => (
                         <div
                             key={`${partner.name}-${index}`}
-                            className="flex-shrink-0 opacity-80 hover:opacity-100 transition-all duration-300 transform hover:scale-105 cursor-default grayscale hover:grayscale-0"
+                            className="flex-shrink-0 opacity-80 hover:opacity-100 transition-opacity duration-300"
                         >
-                            {partner.logo ? (
-                                <div className="bg-white p-2 rounded-xl h-14 md:h-20 flex items-center justify-center min-w-[120px] shadow-sm">
-                                    <img
-                                        src={partner.logo}
-                                        alt={partner.name}
-                                        className="h-full w-auto object-contain"
-                                    />
-                                </div>
-                            ) : (
-                                <div className={`flex items-center justify-center bg-neutral-900/50 border border-neutral-800 rounded-xl px-6 py-3 min-w-[140px] h-[70px] ${partner.color} backdrop-blur-sm`}>
-                                    <span className="font-bold text-lg md:text-xl whitespace-nowrap">{partner.name}</span>
-                                </div>
-                            )}
+                            <img
+                                src={partner.logo}
+                                alt={partner.name}
+                                className="h-12 md:h-16 w-auto object-contain"
+                            />
                         </div>
                     ))}
                 </div>
@@ -76,21 +69,13 @@ const Partners = () => {
                     {marqueeList.map((partner, index) => (
                         <div
                             key={`${partner.name}-dup-${index}`}
-                            className="flex-shrink-0 opacity-80 hover:opacity-100 transition-all duration-300 transform hover:scale-105 cursor-default grayscale hover:grayscale-0"
+                            className="flex-shrink-0 opacity-80 hover:opacity-100 transition-opacity duration-300"
                         >
-                            {partner.logo ? (
-                                <div className="bg-white p-2 rounded-xl h-14 md:h-20 flex items-center justify-center min-w-[120px] shadow-sm">
-                                    <img
-                                        src={partner.logo}
-                                        alt={partner.name}
-                                        className="h-full w-auto object-contain"
-                                    />
-                                </div>
-                            ) : (
-                                <div className={`flex items-center justify-center bg-neutral-900/50 border border-neutral-800 rounded-xl px-6 py-3 min-w-[140px] h-[70px] ${partner.color} backdrop-blur-sm`}>
-                                    <span className="font-bold text-lg md:text-xl whitespace-nowrap">{partner.name}</span>
-                                </div>
-                            )}
+                            <img
+                                src={partner.logo}
+                                alt={partner.name}
+                                className="h-12 md:h-16 w-auto object-contain"
+                            />
                         </div>
                     ))}
                 </div>
