@@ -14,23 +14,23 @@ const Partners = () => {
     // PASTE YOUR LOGO LINKS HERE
     const partners = [
         // Ad Partners
-        { name: 'Talentta', logo: 'https://placehold.co/200x100?text=Talentta' }, // Replace with Link
-        { name: 'Emmviron', logo: 'https://placehold.co/200x100?text=Emmviron' }, // Replace with Link
-        { name: 'Aiden', logo: 'https://placehold.co/200x100?text=Aiden' }, // Replace with Link
+        { name: 'Talentta', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771532452/download_dztery.jpg' }, // Replace with Link
+        { name: 'Emmviron', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771532503/download_zmuj4m.jpg' }, // Replace with Link
+        { name: 'Aiden', logo: 'https://placehold.co/200x100/000000/FFFFFF?text=Aiden' }, // Replace with Link
 
         // Outlet Partners & Lagos Eateries
-        { name: 'JoyceSuperKitchen', logo: 'https://placehold.co/200x100?text=Joyce' }, // Replace with Link
-        { name: 'Mega Chicken', logo: 'https://placehold.co/200x100?text=Mega+Chicken' },
-        { name: 'The Place', logo: 'https://placehold.co/200x100?text=The+Place' },
-        { name: 'Sweet Sensation', logo: 'https://placehold.co/200x100?text=Sweet+Sensation' },
-        { name: 'Chicken Republic', logo: 'https://placehold.co/200x100?text=Chicken+Republic' },
-        { name: 'Kilimanjaro', logo: 'https://placehold.co/200x100?text=Kilimanjaro' },
-        { name: 'Tantalizers', logo: 'https://placehold.co/200x100?text=Tantalizers' },
-        { name: 'Tastee Fried Chicken', logo: 'https://placehold.co/200x100?text=Tastee' },
-        { name: 'Dominos', logo: 'https://placehold.co/200x100?text=Dominos' },
-        { name: 'Cold Stone', logo: 'https://placehold.co/200x100?text=Cold+Stone' },
-        { name: 'Yakoyo', logo: 'https://placehold.co/200x100?text=Yakoyo' },
-        { name: 'Debonairs', logo: 'https://placehold.co/200x100?text=Debonairs' },
+        { name: 'JoyceSuperKitchen', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771529328/JoyceSuperKitchen_nubzdg.svg' },
+        { name: 'Mega Chicken', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771529778/download_revf54.jpg' },
+        { name: 'The Place', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771529830/download_mtseji.png' },
+        { name: 'Sweet Sensation', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771529992/download_a78wgv.png' },
+        { name: 'Chicken Republic', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771530048/download_afxdwm.png' },
+        { name: 'Kilimanjaro', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771530356/download_mm5ahm.png' },
+        { name: 'Tantalizers', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771530439/download_x7fcqb.png' },
+        { name: 'Tastee Fried Chicken', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771530512/download_tjfoed.png' },
+        { name: 'Dominos', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771532208/download_xrmoag.png' },
+        { name: 'Cold Stone', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771532250/download_dmbglk.png' },
+        { name: 'Yakoyo', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771532328/download_iraonn.jpg' },
+        { name: 'Debonairs', logo: 'https://res.cloudinary.com/dw7ag9rwt/image/upload/v1771532385/download_jmkfqt.png' },
     ];
 
     // Duplicate list multiple times for smoother seamless loop on wide screens
@@ -50,25 +50,11 @@ const Partners = () => {
             </div>
 
             <div className="relative flex overflow-hidden group">
-                <div className="flex animate-marquee space-x-12 md:space-x-16 items-center whitespace-nowrap">
+                {/* Single scrolling container for seamless loop */}
+                <div className="flex animate-marquee-infinite space-x-12 md:space-x-16 items-center whitespace-nowrap min-w-max hover:[animation-play-state:paused]">
                     {marqueeList.map((partner, index) => (
                         <div
                             key={`${partner.name}-${index}`}
-                            className="flex-shrink-0 opacity-80 hover:opacity-100 transition-opacity duration-300"
-                        >
-                            <img
-                                src={partner.logo}
-                                alt={partner.name}
-                                className="h-12 md:h-16 w-auto object-contain"
-                            />
-                        </div>
-                    ))}
-                </div>
-
-                <div className="absolute top-0 flex animate-marquee2 space-x-12 md:space-x-16 items-center whitespace-nowrap" aria-hidden="true">
-                    {marqueeList.map((partner, index) => (
-                        <div
-                            key={`${partner.name}-dup-${index}`}
                             className="flex-shrink-0 opacity-80 hover:opacity-100 transition-opacity duration-300"
                         >
                             <img

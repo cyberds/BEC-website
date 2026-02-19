@@ -39,36 +39,17 @@ body {
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
   }
 
-  .animate-marquee {
-    animation: marquee 60s linear infinite;
+  .animate-marquee-infinite {
+    animation: marquee-infinite 60s linear infinite;
   }
 
-  .animate-marquee2 {
-    animation: marquee2 60s linear infinite;
-  }
-
-  .group:hover .animate-marquee,
-  .group:hover .animate-marquee2 {
-    animation-play-state: paused;
-  }
-
-  @keyframes marquee {
+  @keyframes marquee-infinite {
     0% {
       transform: translateX(0%);
     }
 
     100% {
-      transform: translateX(-100%);
-    }
-  }
-
-  @keyframes marquee2 {
-    0% {
-      transform: translateX(100%);
-    }
-
-    100% {
-      transform: translateX(0%);
+      transform: translateX(-50%);
     }
   }
 
